@@ -49,6 +49,15 @@ class FireworkBox extends PlaceableBox {
   }
 }
 
+void drawGrid() {
+  pushMatrix();
+  int gridx = 8;
+  int gridy = 8;
+  int sizex = 20;
+  int sizey = 20;
+  popMatrix();
+}
+
 boolean isPlacing;
 PlaceableBox placingBox;
 
@@ -81,8 +90,11 @@ void draw() {
   fill(0, 128, 0);
   stroke(0, 0, 0);
   strokeWeight(4);
-  ellipse(0, 0, 50, 50);
+  ellipse(0, 0, 100, 100);
   popMatrix();
+  if (isPlacing == true) {
+    drawGrid();
+  }
   for (int i = 0; i < instances.size(); i++) {
     Instance instance = instances.get(i);
     instance.update();
