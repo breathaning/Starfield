@@ -29,5 +29,9 @@ class Particle {
 		y = height / 2;
 		angle = Math.random() * TWO_PI;
 		size = Math.random() * 5 + 10;
+
+		double offsetScalar = Math.random();
+		x += 5 * offsetScalar * speed * Math.cos(angle);
+		y += 5 * offsetScalar * speed * Math.sin(angle);
 	}
 }
