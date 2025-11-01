@@ -1,7 +1,10 @@
 class Oddball extends Particle {
+	private color sparkColor;
+	
 	Oddball() {
 		super();
 		showColor = color(255, 255, 0);
+		sparkColor = color(255, 70, 0);
 		speed = 10;
 	}
 
@@ -12,11 +15,13 @@ class Oddball extends Particle {
 	}
 
 	void show() {
-		super.show();
+		noStroke();
+		fill(sparkColor();
 		pushMatrix();
 		translate(x, y);
 		rotate(x / 100);
 		ellipse(0, 0, size, size * 2);
 		popMatrix();
+		super.show();
 	}
 }
