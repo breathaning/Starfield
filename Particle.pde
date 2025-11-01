@@ -11,7 +11,7 @@ class Particle {
 		x += speed * Math.cos(angle);
 		y += speed * Math.sin(angle);
 
-		double dist = Math.sqrt(Math.pow(x - width / 2, 2) + Math.pow(y - width / 2, 2));
+		double dist = Math.sqrt(Math.pow(x - width / 2, 2) + Math.pow(y - height / 2, 2));
 		double maxDist = Math.sqrt(Math.pow(width / 2, 2) + Math.pow(height / 2, 2));
 		if (dist > maxDist) {
 			reset();
