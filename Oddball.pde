@@ -22,6 +22,7 @@ class Oddball extends Particle {
 		rotate(x / 100);
 		ellipse(0, 0, size, size * 2);
 		popMatrix();
+		fill(showColor);
 		super.show();
 	}
 }
