@@ -1,105 +1,59 @@
-class Instance {
-  PVector position;
-  PVector size;
-  
-  Instance(PVector position, PVector size) {
-    this.position = position;
-    this.size = size;
-    instances.add(this);
-  }
-  
-  Instance(PVector position) {
-    this(position, new PVector(1, 1, 1));
-  }
-  
-  Instance() {
-    this(new PVector(0, 0, 0), new PVector(1, 1, 1));
-  }
-  
-  void update() {}
-  
-  void show() {}
-  
-  void destroy() {
-    instances.remove(this);
-  }
+class Particle {
+	double x, y, angle, speed;
+	color showColor;
+	Particle() {
+		x = width / 2;
+		y = height / 2;
+		angle = Math.random() * TWO_PI;
+		speed = 5;
+		showColor = color(255, 0, 0);
+	}
+
+	void move() {
+		x += speed * Math.cos(angle);
+		y += speed * Math.sin(angle);
+
+		double dist = Math.sqrt(Math.pow(x - 200, 2) + Math.pow(y - 200, 2));
+		double maxDist = Math.sqrt(Math.pow(width / 2, 2) + Math.pow(height / 2, 2));
+		if (dist > maxDist) {
+			x = 0;
+			y = 0;
+		}
+	}
+
+	void show() {
+		noStroke();
+		fill(showColor);
+		ellipse(x, y, 10, 10);
+	}
 }
 
-class PlaceableBox extends Instance {
-  boolean placed = false;
-  
-  PlaceableBox(PVector position) {
-    super(position);
-  }
+class Oddball extends Particle {
+	Oddball() {
+		super();
+		showColor = color(255, 255, 0);
+	}
 }
 
-class FireworkBox extends PlaceableBox {
-  FireworkBox(PVector position) {
-    super(position);
-  }
-  
-  void update() {
-    
-  }
-  
-  void show() {
-    fill(255, 0, 0);
-    translate(position.x, position.y, position.z);
-    box(size.x, size.y, size.z);
-  }
-}
-
-void drawGrid() {
-  pushMatrix();
-  int gridx = 8;
-  int gridy = 8;
-  int sizex = 20;
-  int sizey = 20;
-  popMatrix();
-}
-
-boolean isPlacing;
-PlaceableBox placingBox;
-
-ArrayList<Instance> instances = new ArrayList();
-ArrayList<PlaceableBox> boxes = new ArrayList();
+Particle[] particles = new Particle[100];
 
 void setup() {
   size(500, 500, P3D);
   
-  isPlacing = false;
+	for (int i = 0; i < particles.length; i++) {
+		if (i < 20) {
+			particles[i] = new Oddball();
+		} else {
+			particles[i] = new Particle();
+		}
+	}
 }
 
-void mousePressed() {
-  if (mouseButton == RIGHT && isPlacing == false) {
-    isPlacing = true;
-    placingBox = new FireworkBox(new PVector(0, 0, 0));
-  } else if (mouseButton == LEFT && isPlacing == true) {
-    isPlacing = false;
-    boxes.add(placingBox);
-    placingBox = null;
-  }
-}
 
 void draw() {
-  camera(0, -50, 50, 0, 0, 0, 0, 1, 0);
   background(80, 2, 110);
-  pushMatrix();
-  translate(0, 0, 0);
-  rotateX(HALF_PI);
-  fill(0, 128, 0);
-  stroke(0, 0, 0);
-  strokeWeight(4);
-  ellipse(0, 0, 100, 100);
-  popMatrix();
-  if (isPlacing == true) {
-    drawGrid();
-  }
-  for (int i = 0; i < instances.size(); i++) {
-    Instance instance = instances.get(i);
-    instance.update();
-    pushMatrix();
-    instance.show();
-    popMatrix();
-  }
+	for (int i = 0; i < particles.length; i++) {
+		particles[i].move();
+		particles[i].show();
+	}
 }
