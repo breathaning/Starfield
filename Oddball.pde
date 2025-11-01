@@ -16,7 +16,7 @@ class Oddball extends Particle {
 
 	void show() {
 		noStroke();
-		fill(sparkColor();
+		fill(sparkColor);
 		pushMatrix();
 		translate(x, y);
 		rotate(x / 100);
